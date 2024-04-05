@@ -2,17 +2,21 @@ const { Octokit } = require("@octokit/rest");
 const fs = require("fs");
 const path = require("path");
 
-async function PushCodeToRepo(repoOwner, repoName, directoryPath, commitMessage) {
+async function main() {
     try {
-        const { default: fetch } = await import("node-fetch");
-        const { Octokit } = await import("@octokit/rest");
+        const { default: fetch } = await import("node-fetch"); // Import fetch dynamically within the async function
 
         const octokit = new Octokit({
-            auth: "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",
+            auth: "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",
             request: {
                 fetch: fetch
             }
         });
+
+        const repoOwner = "gautam-fameux";
+        const repoName = "PostmanProject";
+        const directoryPath = "E:\\nodejs\\12 login project with postman"; // Use double backslashes in the path
+        const commitMessage = "Initial commit";
 
         const filePath = path.join(directoryPath, 'index.js');
         const content = fs.readFileSync(filePath, 'utf8');
@@ -49,8 +53,10 @@ async function PushCodeToRepo(repoOwner, repoName, directoryPath, commitMessage)
 
 async function deleteRepo(repoOwner, repoName) {
     try {
+        const fetch = require("node-fetch"); // Import fetch within the async function
+
         const octokit = new Octokit({
-            auth: "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",
+            auth: "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",
             request: {
                 fetch: fetch // Pass the fetch function directly
             }
@@ -79,8 +85,10 @@ async function deleteRepo(repoOwner, repoName) {
 
 async function createRepo(repoName) {
     try {
+        const fetch = require("node-fetch"); // Import fetch within the async function
+
         const octokit = new Octokit({
-            auth: "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",
+            auth: "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",
             request: {
                 fetch: fetch // Pass the fetch function directly
             }
@@ -99,18 +107,4 @@ async function createRepo(repoName) {
 }
 
 // Usage example
-const repoOwner = "gautam-fameux";
-const repoName = "PostmanProject";
-const directoryPath = "E:\\nodejs\\12 login project with postman"; // Use double backslashes in the path
-const commitMessage = "Initial commit";
-
-PushCodeToRepo(repoOwner, repoName, directoryPath, commitMessage)
-    .then(() => {
-        return deleteRepo(repoOwner, repoName);
-    })
-    .then(() => {
-        return createRepo(repoName);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
+main(); // Call the main function to start the process
